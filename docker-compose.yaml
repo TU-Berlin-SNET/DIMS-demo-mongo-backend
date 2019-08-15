@@ -1,0 +1,26 @@
+version: '3.7'
+
+services:
+  demobackend:
+    image: dims/demo-backend
+    build:
+      context: .
+    ports:
+      - ${DEMO_BACKEND_PORT-8011}:${DEMO_BACKEND_PORT-8011}
+    depends_on:
+      - mongodb
+    environment:
+      - DEMO_BACKEND_HOST=${DEMO_BACKEND_HOST-localhost}
+      - DEMO_BACKEND_PORT=${DEMO_BACKEND_PORT-8011}
+      - IDC_API_DB_HOST=${IDC_API_DB_HOST-mongodb}
+      - IDC_API_DB_PORT=${IDC_API_DB_PORT-27017}
+      - IDC_API_DB_USER
+      - IDC_API_DB_PASSWORD
+      - IDC_API_JWT_SECRET=${IDC_API_JWT_SECRET-changeme}
+
+  mongodb:
+    image: mongo:4
+    command: --smallfiles
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=${IDC_API_DB_USER}
+      - MONGO_INITDB_ROOT_PASSWORD=${IDC_API_DB_PASSWORD}
