@@ -19,11 +19,20 @@ if (config.DB_USER) {
 }
 connString += `${config.DB_HOST}:${config.DB_PORT}/idchain`
 
+const options = {
+  // switch to new parser from deprecated old one
+  useNewUrlParser: true,
+  // use mongoDB driver's native findAndUpdate instead of old findAndModify
+  useFindAndModify: false,
+  // use createIndex instead of deprecated ensureIndex
+  useCreateIndex: true,
+}
+
 /**
  * Connect to MongoDB
  */
 function connect () {
-  Mongoose.connect(connString)
+  Mongoose.connect(connString, options)
     .then(() => console.log('connection to database established'))
     .catch(error => {
       console.error(error)
