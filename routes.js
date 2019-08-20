@@ -53,7 +53,7 @@ function registerRoute (route, baseRouter) {
     })
     .put(async (req, res) => {
       try {
-        const data = await Model.findOneAndUpdate({ id: req.params[idParam] }, req.body, { upsert: true }).exec()
+        const data = await Model.findOneAndUpdate({ id: req.params[idParam] }, req.body, { upsert: true, new: true }).exec()
         if (!data) {
           res.send(404)
         } else {
