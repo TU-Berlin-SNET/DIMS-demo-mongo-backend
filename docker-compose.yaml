@@ -10,7 +10,7 @@ services:
     depends_on:
       - mongodb
     environment:
-      - DEMO_BACKEND_HOST=${DEMO_BACKEND_HOST-localhost}
+      - DEMO_BACKEND_HOST=${DEMO_BACKEND_HOST-0.0.0.0}
       - DEMO_BACKEND_PORT=${DEMO_BACKEND_PORT-8011}
       - IDC_API_DB_HOST=${IDC_API_DB_HOST-mongodb}
       - IDC_API_DB_PORT=${IDC_API_DB_PORT-27017}
