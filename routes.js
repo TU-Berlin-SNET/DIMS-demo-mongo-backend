@@ -5,14 +5,26 @@ const baseRoute = express.Router()
 
 const routes = [
   {
-    name: 'legal-person',
-    model: require('./models/legal-person')
-  },
-  {
-    name: 'natural-person',
-    model: require('./models/natural-person')
+    name: 'citizen',
+    model: require('./models/citizen')
   }
 ]
+
+async function process(req, res, dataFn) {
+  try {
+    const data = await dataFn()
+    if (!data) {
+      return res.status(404).json({ message: 'not found' })
+    }
+    if (req.method === 'DELETE') {
+      return res.status(204).end()
+    }
+    res.status(200).json(data)
+  } catch (err) {
+    console.error(err)
+    res.status(err.name === 'ValidationError' ? 400 : 500).send(err.message)
+  }
+}
 
 function registerRoute (route, baseRouter) {
   const router = express.Router()
@@ -21,56 +33,18 @@ function registerRoute (route, baseRouter) {
   const idParam = route.name.split('-').join('') + 'Id'
 
   router.route(`/`)
-    .get(async (req, res) => {
-      try {
-        const data = Model.find(req.query || {}).exec()
-        res.json(data || [])
-      } catch (err) {
-        res.status(500).send(err)
-      }
-    })
-    .post(async (req, res) => {
-      try {
-        const data = await new Model(req.body).save()
-        res.json(data)
-      } catch (err) {
-        res.status(err.name === 'ValidationError' ? 400 : 500).send(err)
-      }
-    })
+    .get(async (req, res) => await process(req, res,
+      () => Model.find(req.query || {}).exec()))
+    .post(async (req, res) => await process(req, res,
+      () => new Model(req.body).save()))
 
   router.route(`/:${idParam}`)
-    .get(async (req, res) => {
-      try {
-        const data = await Model.findOne({ id: req.params[idParam] }).exec()
-        if (!data) {
-          res.status(404).send({ message: 'not found' })
-        } else {
-          res.json(data)
-        }
-      } catch (err) {
-        res.status(500).send(err)
-      }
-    })
-    .put(async (req, res) => {
-      try {
-        const data = await Model.findOneAndUpdate({ id: req.params[idParam] }, req.body, { upsert: true, new: true }).exec()
-        if (!data) {
-          res.send(404)
-        } else {
-          res.json(data)
-        }
-      } catch (err) {
-        res.status(500).send(err)
-      }
-    })
-    .delete(async (req, res) => {
-      try {
-        await Model.findOneAndDelete({ id: req.params[idParam] }).exec()
-        res.send(204)
-      } catch (err) {
-        res.status(500).send(err)
-      }
-    })
+    .get(async (req, res) => await process(req, res,
+      () => Model.findOne({ id: req.params[idParam] }).exec()))
+    .put(async (req, res) => await process(req, res,
+      () => Model.findOneAndUpdate({ id: req.params[idParam] }, req.body, { upsert: true, new: true }).exec()))
+    .delete(async (req, res) => await process(req, res,
+      () => Model.findOneAndDelete({ id: req.params[idParam] }).exec()))
 
   baseRouter.use(`/${path}`, router)
   console.log('registered route %s', path)

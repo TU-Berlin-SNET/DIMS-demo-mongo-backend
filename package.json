@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "start": "node index.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "DEBUG=* nodemon --inspect index.js"
   },
   "author": "SNET TU-Berlin",
   "license": "Apache-2.0",

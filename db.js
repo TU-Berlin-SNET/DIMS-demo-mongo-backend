@@ -25,7 +25,7 @@ const options = {
   // use mongoDB driver's native findAndUpdate instead of old findAndModify
   useFindAndModify: false,
   // use createIndex instead of deprecated ensureIndex
-  useCreateIndex: true,
+  useCreateIndex: true
 }
 
 /**
