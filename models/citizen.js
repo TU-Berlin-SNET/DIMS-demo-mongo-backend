@@ -23,7 +23,6 @@ const Mongoose = require('../db')
 // SEED System for Exchange of Excise Data Identifier optional
 // SIC Standard Industrial Classification
 
-
 const schema = new Mongoose.Schema(
   {
     id: {

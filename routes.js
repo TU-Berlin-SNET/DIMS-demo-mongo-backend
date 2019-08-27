@@ -10,7 +10,7 @@ const routes = [
   }
 ]
 
-async function process(req, res, dataFn) {
+async function process (req, res, dataFn) {
   try {
     const data = await dataFn()
     if (!data) {
@@ -22,7 +22,7 @@ async function process(req, res, dataFn) {
     res.status(200).json(data)
   } catch (err) {
     console.error(err)
-    res.status(err.name === 'ValidationError' ? 400 : 500).send(err.message)
+    res.status(err.name === 'ValidationError' ? 400 : 500).json({ message: err.message })
   }
 }
 
@@ -33,17 +33,17 @@ function registerRoute (route, baseRouter) {
   const idParam = route.name.split('-').join('') + 'Id'
 
   router.route(`/`)
-    .get(async (req, res) => await process(req, res,
+    .get(async (req, res) => process(req, res,
       () => Model.find(req.query || {}).exec()))
-    .post(async (req, res) => await process(req, res,
+    .post(async (req, res) => process(req, res,
       () => new Model(req.body).save()))
 
   router.route(`/:${idParam}`)
-    .get(async (req, res) => await process(req, res,
+    .get(async (req, res) => process(req, res,
       () => Model.findOne({ id: req.params[idParam] }).exec()))
-    .put(async (req, res) => await process(req, res,
-      () => Model.findOneAndUpdate({ id: req.params[idParam] }, req.body, { upsert: true, new: true }).exec()))
-    .delete(async (req, res) => await process(req, res,
+    .put(async (req, res) => process(req, res,
+      () => Model.findOneAndUpdate({ id: req.params[idParam] }, req.body, { new: true }).exec()))
+    .delete(async (req, res) => process(req, res,
       () => Model.findOneAndDelete({ id: req.params[idParam] }).exec()))
 
   baseRouter.use(`/${path}`, router)
