@@ -17,7 +17,7 @@ Mongoose.Promise = global.Promise
 if (config.DB_USER) {
   connString += `${config.DB_USER}:${config.DB_PASSWORD}@`
 }
-connString += `${config.DB_HOST}:${config.DB_PORT}/idchain`
+connString += `${config.DB_HOST}:${config.DB_PORT}/demobackend`
 
 const options = {
   // switch to new parser from deprecated old one
