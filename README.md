@@ -20,7 +20,7 @@ Authentication is provided by the API. Register and login there. The provided to
 
 ### Configuration
 
-Use `.env`, valid attributes are:
+Use `.env` (or environment variables), valid attributes are:
 ```shell
 DEMO_BACKEND_HOST
 # default: 8011
@@ -45,7 +45,5 @@ IDC_API_DB_PASSWORD
 
 | Path            | Methods |
 |:----------------|---------|
-| /legal-persons  | GET, POST |
-| /legal-persons/:id | GET, PUT, DELETE |
-| /natural-persons  | GET, POST |
-| /natural-persons/:id | GET, PUT, DELETE |
+| /citizens  | GET, POST |
+| /citizens/:id | GET, PUT, DELETE |
