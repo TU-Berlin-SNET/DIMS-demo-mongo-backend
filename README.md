@@ -41,9 +41,45 @@ IDC_API_DB_PASSWORD
 ```
 
 
-## Exposed Collections
+## Collections
 
+### citizens
+
+#### Paths
 | Path            | Methods |
 |:----------------|---------|
 | /citizens  | GET, POST |
 | /citizens/:id | GET, PUT, DELETE |
+
+__NOTE__: `GET /citizens` also supports query parameters (exact match) for every field in the model, e.g. `GET /citizens?familyName=Digital`
+
+#### Model
+
+```jsonc
+{
+    // required, unique
+    "id": "string",
+    "legalId": "string",
+
+    // required
+    "familyName": "string",
+    "firstName": "string",
+    "legalName": "string",
+    "address": "string",
+    "dateOfBirth": "date",
+
+    // optional
+    "placeOfBirth": "string",
+    "gender": "string",
+    "vatRegistration": 10,
+    "taxReference": 20,
+    "lei": "string",
+    "eori": "string",
+    "seed": "string",
+    "sic": "string",
+
+    // automatically handled
+    "createdAt": "date",
+    "updatedAt": "date"
+}
+```
