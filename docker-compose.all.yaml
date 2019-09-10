@@ -1,4 +1,4 @@
-version: '3.7'
+version: '3.3'
 
 networks:
   indy-network:
@@ -33,7 +33,6 @@ services:
 
   schema:
     image: idchain/schema-extensions:1.0
-    init: true
     environment:
       - IDC_SCHEMA_IP=${IDC_SCHEMA_IP-172.16.0.150}
       - IDC_SCHEMA_PORT=${IDC_SCHEMA_PORT-9000}

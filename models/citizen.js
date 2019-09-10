@@ -49,7 +49,6 @@ const schema = new Mongoose.Schema(
     },
     address: {
       type: String,
-      required: true
     },
     dateOfBirth: {
       type: Date,
