@@ -48,7 +48,7 @@ const schema = new Mongoose.Schema(
       required: true
     },
     address: {
-      type: String,
+      type: String
     },
     dateOfBirth: {
       type: Date,
@@ -76,6 +76,9 @@ const schema = new Mongoose.Schema(
       type: String
     },
     sic: {
+      type: String
+    },
+    did: {
       type: String
     }
   },

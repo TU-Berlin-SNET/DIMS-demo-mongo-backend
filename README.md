@@ -77,6 +77,7 @@ __NOTE__: `GET /citizens` also supports query parameters (exact match) for every
     "eori": "string",
     "seed": "string",
     "sic": "string",
+    "did": "string",
 
     // automatically handled
     "createdAt": "date",
