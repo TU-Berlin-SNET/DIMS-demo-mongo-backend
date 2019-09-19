@@ -93,4 +93,6 @@ schema.set('toJSON', {
   }
 })
 
-module.exports = Mongoose.model('Citizen', schema)
+const model = Mongoose.model('Citizen', schema)
+
+module.exports = { schema, model }

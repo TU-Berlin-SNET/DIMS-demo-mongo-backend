@@ -7,8 +7,17 @@ const routes = [
   {
     name: 'citizen',
     model: require('./models/citizen')
+  },
+  {
+    name: 'bank-customer',
+    model: require('./models/bank-customer')
   }
 ]
+
+const schemas = routes.reduce((accu, route) => {
+  accu[route.name + 's'] = Object.assign({}, route.model.schema.obj, { createdAt: {}, updatedAt: {} })
+  return accu
+}, {})
 
 async function process (req, res, dataFn) {
   try {
@@ -29,7 +38,7 @@ async function process (req, res, dataFn) {
 function registerRoute (route, baseRouter) {
   const router = express.Router()
   const path = route.name + 's'
-  const Model = route.model
+  const Model = route.model.model
   const idParam = route.name.split('-').join('') + 'Id'
 
   router.route(`/`)
@@ -51,5 +60,9 @@ function registerRoute (route, baseRouter) {
 }
 
 routes.forEach(route => registerRoute(route, baseRoute))
+
+baseRoute.get('/models', (req, res) => {
+  res.json(schemas)
+})
 
 module.exports = baseRoute

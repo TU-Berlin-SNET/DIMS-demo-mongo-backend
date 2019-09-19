@@ -43,44 +43,20 @@ IDC_API_DB_PASSWORD
 
 ## Collections
 
-### citizens
+- See `routes.js` for enabled routes.
 
-#### Paths
+### Paths
+
 | Path            | Methods |
 |:----------------|---------|
-| /citizens  | GET, POST |
-| /citizens/:id | GET, PUT, DELETE |
+| /models       | GET   |
+| /:collection  | GET, POST |
+| /:collection/:id | GET, PUT, DELETE |
 
-__NOTE__: `GET /citizens` also supports query parameters (exact match) for every field in the model, e.g. `GET /citizens?familyName=Digital`
+__NOTE__: `GET /models` returns registered collections and their schemas.
+
+__NOTE__: `GET /:collection` also supports query parameters (exact match) for every field in the model, e.g. `GET /citizens?familyName=Digital`
 
 #### Model
 
-```jsonc
-{
-    // required, unique
-    "id": "string",
-    "legalId": "string",
-
-    // required
-    "familyName": "string",
-    "firstName": "string",
-    "legalName": "string",
-    "address": "string",
-    "dateOfBirth": "date",
-
-    // optional
-    "placeOfBirth": "string",
-    "gender": "string",
-    "vatRegistration": 10,
-    "taxReference": 20,
-    "lei": "string",
-    "eori": "string",
-    "seed": "string",
-    "sic": "string",
-    "did": "string",
-
-    // automatically handled
-    "createdAt": "date",
-    "updatedAt": "date"
-}
-```
+- See `models/*.js` for structures
