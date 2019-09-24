@@ -81,6 +81,9 @@ const schema = new Mongoose.Schema(
     did: {
       type: String
     },
+    picture: {
+      type: String
+    },
     meta: {}
   },
   { timestamps: true, minimize: false }

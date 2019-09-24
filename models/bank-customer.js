@@ -50,6 +50,9 @@ const schema = new Mongoose.Schema(
         type: Number
       }
     },
+    picture: {
+      type: String
+    },
     meta: { }
   },
   { timestamps: true, minimize: false }
