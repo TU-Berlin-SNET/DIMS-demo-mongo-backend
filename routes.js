@@ -11,6 +11,14 @@ const routes = [
   {
     name: 'bank-customer',
     model: require('./models/bank-customer')
+  },
+  {
+    name: 'legal-person',
+    model: require('./models/legal-person')
+  },
+  {
+    name: 'natural-person',
+    model: require('./models/natural-person')
   }
 ]
 
