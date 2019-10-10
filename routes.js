@@ -6,26 +6,32 @@ const baseRoute = express.Router()
 const routes = [
   {
     name: 'citizen',
-    model: require('./models/citizen')
+    model: require('./models/citizen'),
+    roles: []
   },
   {
     name: 'bank-customer',
-    model: require('./models/bank-customer')
+    model: require('./models/bank-customer'),
+    roles: ['bank']
   },
   {
     name: 'legal-person',
-    model: require('./models/legal-person')
+    model: require('./models/legal-person'),
+    roles: ['government']
   },
   {
     name: 'natural-person',
-    model: require('./models/natural-person')
+    model: require('./models/natural-person'),
+    roles: ['government']
   }
 ]
 
-const schemas = routes.reduce((accu, route) => {
-  accu[route.name + 's'] = Object.assign({}, route.model.schema.obj, { createdAt: {}, updatedAt: {} })
-  return accu
-}, {})
+function reduceNameToSchemaObj (data) {
+  return data.reduce((accu, route) => {
+    accu[route.name + 's'] = Object.assign({}, route.model.schema.obj, { createdAt: {}, updatedAt: {} })
+    return accu
+  }, {})
+}
 
 async function process (req, res, dataFn) {
   try {
@@ -70,7 +76,11 @@ function registerRoute (route, baseRouter) {
 routes.forEach(route => registerRoute(route, baseRoute))
 
 baseRoute.get('/models', (req, res) => {
-  res.json(schemas)
+  res.json(reduceNameToSchemaObj(routes))
+})
+
+baseRoute.get('/models/:role', (req, res) => {
+  res.json(reduceNameToSchemaObj(routes.filter(v => v.roles.includes(req.params.role))))
 })
 
 module.exports = baseRoute
