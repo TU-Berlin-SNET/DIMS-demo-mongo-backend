@@ -25,10 +25,29 @@ const routes = [
     roles: ['government']
   }
 ]
+routes.forEach(route => { route.schema = reduceSchemaObjToJson(route.model.schema.obj) })
 
-function reduceNameToSchemaObj (data) {
-  return data.reduce((accu, route) => {
-    accu[route.name + 's'] = Object.assign({}, route.model.schema.obj, { createdAt: {}, updatedAt: {} })
+function reduceSchemaObjToJson (schema) {
+  return Object.entries(schema).reduce((accu, entry) => {
+    const [key, value] = entry
+    switch (typeof value) {
+      case 'function':
+        accu[key] = value.name
+        break
+      case 'object':
+        accu[key] = reduceSchemaObjToJson(value)
+        break
+      default:
+        accu[key] = value
+    }
+    return accu
+  }, {})
+}
+
+function reduceToSchemas (data, filter) {
+  const processData = filter ? data.filter(filter) : data
+  return processData.reduce((accu, value) => {
+    accu[value.name + 's'] = value.schema
     return accu
   }, {})
 }
@@ -76,11 +95,11 @@ function registerRoute (route, baseRouter) {
 routes.forEach(route => registerRoute(route, baseRoute))
 
 baseRoute.get('/models', (req, res) => {
-  res.json(reduceNameToSchemaObj(routes))
+  res.json(reduceToSchemas(routes))
 })
 
 baseRoute.get('/models/:role', (req, res) => {
-  res.json(reduceNameToSchemaObj(routes.filter(v => v.roles.includes(req.params.role))))
+  res.json(reduceToSchemas(routes, v => v.roles.includes(req.params.role)))
 })
 
 module.exports = baseRoute

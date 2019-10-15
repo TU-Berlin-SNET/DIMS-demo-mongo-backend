@@ -40,23 +40,51 @@ IDC_API_DB_USER
 IDC_API_DB_PASSWORD
 ```
 
-
 ## Collections
 
-- See `routes.js` for enabled routes.
+- See `routes.js` for enabled collections.
 
 ### Paths
 
 | Path            | Methods |
 |:----------------|---------|
 | /models       | GET   |
+| /models/:role       | GET   |
 | /:collection  | GET, POST |
 | /:collection/:id | GET, PUT, DELETE |
 
-__NOTE__: `GET /models` returns registered collections and their schemas.
+__NOTE__: `GET /models` returns registered collections and their schemas. `GET /models/:role` returns collections and their schemas for a specific role.
 
 __NOTE__: `GET /:collection` also supports query parameters (exact match) for every field in the model, e.g. `GET /citizens?familyName=Digital`
 
 #### Model
 
 - See `models/*.js` for structures
+
+##### How to add models
+
+1. Create new model in `models/`. Structurally, the schema should define types for fields as e.g. `fieldName: { type: String }` and not `fieldName: String` to correctly generate documentation for the `/models` and `/models/:role` endpoints.
+```javascript
+  // THIS IS FALSE
+  const schema = new Mongoose.Schema(
+    {
+      fieldName: String
+    }
+  )
+
+  // THIS IS BETTER
+  const schema = new Mongoose.Schema(
+    {
+      fieldName: {
+        type: String
+      }
+    }
+  )
+```
+
+2. Models should export both the model and schema object.
+```javascript
+  const model = Mongoose.model('ModelName', schema)
+
+  module.exports = { schema, model }
+```
