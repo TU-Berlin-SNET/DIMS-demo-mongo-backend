@@ -20,17 +20,21 @@ const schema = new Mongoose.Schema(
       index: { unique: true },
       required: true
     },
-    legalName: {
+    firstname: {
+      type: String,
+      required: true
+    },
+    lastname: {
       type: String,
       required: true
     },
     address: {
       type: String
     },
-    vatRegistration: {
+    vatregistration: {
       type: Number
     },
-    taxReference: {
+    taxreference: {
       type: Number
     },
     lei: {

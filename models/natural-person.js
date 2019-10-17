@@ -19,22 +19,22 @@ const schema = new Mongoose.Schema(
       index: { unique: true },
       required: true
     },
-    familyName: {
+    firstname: {
       type: String,
       required: true
     },
-    firstName: {
+    lastname: {
       type: String,
       required: true
     },
-    dateOfBirth: {
+    dateofbirth: {
       type: Date,
       required: true
     },
-    birthName: {
+    birthname: {
       type: String
     },
-    placeOfBirth: {
+    placeofbirth: {
       type: String
     },
     address: {

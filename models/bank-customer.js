@@ -9,7 +9,11 @@ const schema = new Mongoose.Schema(
       index: { unique: true },
       required: true
     },
-    name: {
+    firstname: {
+      type: String,
+      required: true
+    },
+    lastname: {
       type: String,
       required: true
     },
