@@ -54,6 +54,9 @@ const schema = new Mongoose.Schema(
         type: Number
       }
     },
+    did: {
+      type: String
+    },
     picture: {
       type: String
     },
