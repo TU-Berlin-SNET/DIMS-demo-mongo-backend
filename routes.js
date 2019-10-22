@@ -17,12 +17,12 @@ const routes = [
   {
     name: 'legal-person',
     model: require('./models/legal-person'),
-    roles: ['government']
+    roles: ['government', 'shop']
   },
   {
     name: 'natural-person',
     model: require('./models/natural-person'),
-    roles: ['government']
+    roles: ['government', 'shop']
   }
 ]
 routes.forEach(route => { route.schema = reduceSchemaObjToJson(route.model.schema.obj) })
