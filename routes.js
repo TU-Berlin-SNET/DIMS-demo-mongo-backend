@@ -17,7 +17,7 @@ const routes = [
   {
     name: 'legal-person',
     model: require('./models/legal-person'),
-    roles: ['government', 'shop']
+    roles: ['government']
   },
   {
     name: 'natural-person',
